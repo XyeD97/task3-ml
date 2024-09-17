@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('🎈 App Name')
+st.title('My first streamlit app as a task')
 
 st.write('Hello world!')
