@@ -68,4 +68,7 @@ if plot_selection == "Wins by Toss Decision":
     plt.figure(figsize=(30, 20))
     sns.countplot(x=df['toss_decision'], hue=df['winner'])
     plt.title('Wins Based on Toss Decision')
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     st.pyplot()
+    
