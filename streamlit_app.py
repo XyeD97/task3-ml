@@ -47,3 +47,7 @@ st.pyplot()
 st.write("Wins Based on Toss Decision")
 plt.figure(figsize=(4, 2))
 
+sns.countplot(x=df['toss_decision'], hue=df['winner'])
+
+plt.title('Wins Based on Toss Decision')
+st.pyplot()
