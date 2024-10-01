@@ -33,11 +33,11 @@ elif plot_type == "Missing Values":
 
 elif plot_type == "Matches Played at Different Venues":
     st.write("### Matches Played at Different Venues")
-    plt.figure(figsize=(20, 15))  # Adjusted size for better display
+    plt.figure(figsize=(40, 30))  # Adjusted size for better display
     sns.countplot(y=df['venue'], order=df['venue'].value_counts().index, palette="coolwarm")
-    plt.title('Matches Played by Venue', fontsize=16)
-    plt.xlabel('Matches Played', fontsize=12)
-    plt.ylabel('Venue', fontsize=12)
+    plt.title('Matches Played by Venue', fontsize=24)
+    plt.xlabel('Matches Played', fontsize=20)
+    plt.ylabel('Venue', fontsize=20)
     st.pyplot()
 
 elif plot_type == "Wins by Team":
@@ -52,9 +52,9 @@ elif plot_type == "Wins by Team":
 
 elif plot_type == "Wins Based on Toss Decision":
     st.write("### Wins Based on Toss Decision")
-    plt.figure(figsize=(15, 8))  # Adjusted size for better display
+    plt.figure(figsize=(30, 15))  # Adjusted size for better display
     sns.countplot(x=df['toss_decision'], hue=df['winner'], palette="Set2")
-    plt.title('Wins Based on Toss Decision', fontsize=16)
-    plt.xlabel('Toss Decision', fontsize=12)
-    plt.ylabel('Count', fontsize=12)
+    plt.title('Wins Based on Toss Decision', fontsize=24)
+    plt.xlabel('Toss Decision', fontsize=20)
+    plt.ylabel('Count', fontsize=20)
     st.pyplot()
