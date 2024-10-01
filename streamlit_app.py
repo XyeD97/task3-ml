@@ -1,47 +1,48 @@
-import streamlit as st
 import pandas as pd
-
-st.title('Cricket Analysis app for EDA')
-
-st.info('This app builds a machine learning model on cricket related dataset')
+import seaborn as sns
+import matplotlib.pyplot as plt
+import streamlit as st
 
 # Load the dataset
 df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
 
-with st.expander('Data'):
-    st.write('**Raw Data**')
-    st.write(df)
+# Show the dataset in Streamlit
+st.write("Dataset Overview", df.head())
 
-    st.write('**X**')
-    x = df.drop('id', axis=1)
-    st.write(x)
+# 1. Data Overview
+st.write("Basic Info")
+st.write(df.info())  # Basic information of the data like data types, null values
 
-    st.write('**Y**')
-    y = df.id
-    st.write(y)
+st.write("Summary Statistics")
+st.write(df.describe())  # Statistical summary of numerical columns
 
-with st.expander('Data Visualization'):
-    st.scatter_chart(data=df, x='team1', y='team2', color='toss_winner')
+# 2. Check for missing values
+st.write("Missing Values")
+st.write(df.isnull().sum())  # Check which columns have missing values
 
-# Data preparation and sidebar setup
-with st.sidebar:
-    st.header('Input features')
+# 3. Plotting some key visualizations
 
-    # Combine team1 and team2 columns to form a unique list of countries
-    all_teams = pd.concat([df['team1'], df['team2']]).drop_duplicates().sort_values()
+# Set up Streamlit plot display
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
-    # Select box for Team 1
-    team1 = st.selectbox("Select Your Team", all_teams)
+# 4. Distribution of matches played per venue
+st.write("Matches Played at Different Venues")
+plt.figure(figsize=(10, 5))
+sns.countplot(y=df['venue'], order=df['venue'].value_counts().index)
+plt.title('Matches Played by Venue')
+st.pyplot()
 
-    # Select box for Team 2
-    team2 = st.selectbox("Select Opposite Team", all_teams)
+# 5. Number of wins by team
+st.write("Wins by Team")
+plt.figure(figsize=(10, 5))
+sns.countplot(x=df['winner'], order=df['winner'].value_counts().index)
+plt.title('Number of Wins by Team')
+plt.xticks(rotation=90)
+st.pyplot()
 
-    # Select box for Venue
-    venue = st.selectbox("Select Venue", df['venue'].drop_duplicates().sort_values())
-
-    # Add a button for analysis
-    if st.button("Analyze"):
-        # Display the selected options
-        st.write(f"Analyzing match between {team1} and {team2} at {venue}")
-
-        # You can perform any analysis based on the selected teams and venue
+# 6. Wins by toss decision (field or bat)
+st.write("Wins Based on Toss Decision")
+plt.figure(figsize=(6, 4))
+sns.countplot(x=df['toss_decision'], hue=df['winner'])
+plt.title('Wins Based on Toss Decision')
+st.pyplot()
