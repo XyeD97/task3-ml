@@ -17,3 +17,5 @@ with st.expander('Data'):
   st.write('**Y**')
   y = df.id
   y
+with st.expander('Data Visualization')
+  st.scatter_chart(data= df, x='toss_winner', y= 'toss_decision', color='id')
