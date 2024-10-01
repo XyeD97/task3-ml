@@ -19,3 +19,7 @@ with st.expander('Data'):
   y
 with st.expander('Data Visualization'):
   st.scatter_chart(data= df, x='team1', y= 'team2', color='toss_winner')
+
+#Data preparations
+with st.sidebar:
+  st.header('Input features')
