@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # Load the dataset
-df = pd.read_csv('/mnt/data/ODI_Match_info.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
 
 # Sidebar for plot selection
 st.sidebar.title("Visualization Options")
