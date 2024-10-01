@@ -46,4 +46,15 @@ elif plot_type == "Wins by Team":
     sns.countplot(x=df['winner'], order=df['winner'].value_counts().index, palette="Blues_d")
     plt.title('Number of Wins by Team', fontsize=16)
     plt.xticks(rotation=90, fontsize=10)
-    plt.xlabel('Team
+    plt.xlabel('Team', fontsize=12)
+    plt.ylabel('Wins', fontsize=12)
+    st.pyplot()
+
+elif plot_type == "Wins Based on Toss Decision":
+    st.write("### Wins Based on Toss Decision")
+    plt.figure(figsize=(15, 8))  # Adjusted size for better display
+    sns.countplot(x=df['toss_decision'], hue=df['winner'], palette="Set2")
+    plt.title('Wins Based on Toss Decision', fontsize=16)
+    plt.xlabel('Toss Decision', fontsize=12)
+    plt.ylabel('Count', fontsize=12)
+    st.pyplot()
