@@ -43,8 +43,10 @@ plt.xticks(rotation=90)
 st.pyplot()
 
 # 6. Wins by toss decision (field or bat)
+
 st.write("Wins Based on Toss Decision")
 plt.figure(figsize=(6, 4))
+
 
 sns.countplot(x=df['toss_decision'], hue=df['winner'])
 plt.title('Wins Based on Toss Decision')
