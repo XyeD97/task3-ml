@@ -21,18 +21,19 @@ st.write(df.isnull().sum())  # Check which columns have missing values
 
 # 4. Distribution of matches played per venue
 st.write("Matches Played at Different Venues")
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(6, 3))
 sns.countplot(y=df['venue'], order=df['venue'].value_counts().index)
 plt.title('Matches Played by Venue')
+
 st.pyplot()
 
 # 5. Number of wins by team
 st.write("Wins by Team")
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(4, 2))
 
 sns.countplot(x=df['winner'], order=df['winner'].value_counts().index)
 plt.title('Number of Wins by Team')
-plt.xticks(rotation=90)
+plt.xticks()
 st.pyplot()
 
 # 6. Wins by toss decision (field or bat)
