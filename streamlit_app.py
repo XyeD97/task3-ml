@@ -18,4 +18,4 @@ with st.expander('Data'):
   y = df.id
   y
 with st.expander('Data Visualization'):
-  st.scatter_chart(data= df, x='toss_winner', y= 'toss_decision', color='id')
+  st.scatter_chart(data= df, x='team1', y= 'team2', color='toss_winner')
