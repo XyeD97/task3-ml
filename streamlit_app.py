@@ -39,25 +39,16 @@ st.pyplot()
 
 # 5. Number of wins by team
 st.write("Wins by Team")
-
 plt.figure(figsize=(10, 5))
 
-
 sns.countplot(x=df['winner'], order=df['winner'].value_counts().index)
-
 plt.title('Number of Wins by Team')
-
 plt.xticks(rotation=90)
-
 st.pyplot()
 
 # 6. Wins by toss decision (field or bat)
 st.write("Wins Based on Toss Decision")
-
 plt.figure(figsize=(6, 4))
-
 sns.countplot(x=df['toss_decision'], hue=df['winner'])
-
 plt.title('Wins Based on Toss Decision')
-
 st.pyplot()
