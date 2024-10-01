@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('My first streamlit app as a task')
+st.title('Cricket Analysis app for EDA')
 
 st.write('Hello world!')
