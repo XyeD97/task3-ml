@@ -10,10 +10,6 @@ df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/m
 st.write("Dataset Overview", df.head())
 
 # 1. Data Overview
-st.write("Basic Info")
-
-st.write(df.info())  # Basic information of the data like data types, null values
-
 st.write("Summary Statistics")
 
 st.write(df.describe())  # Statistical summary of numerical columns
