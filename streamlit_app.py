@@ -33,7 +33,7 @@ elif plot_type == "Missing Values":
 
 elif plot_type == "Matches Played at Different Venues":
     st.write("### Matches Played at Different Venues")
-    plt.figure(figsize=(40, 30))  # Adjusted size for better display
+    plt.figure(figsize=(50, 40))  # Adjusted size for better display
     sns.countplot(y=df['venue'], order=df['venue'].value_counts().index, palette="coolwarm")
     plt.title('Matches Played by Venue', fontsize=42)
     plt.xlabel('Matches Played', fontsize=36)
