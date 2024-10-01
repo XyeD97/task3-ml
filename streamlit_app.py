@@ -22,9 +22,6 @@ st.write(df.isnull().sum())  # Check which columns have missing values
 
 # 3. Plotting some key visualizations
 
-# Set up Streamlit plot display
-st.set_option('deprecation.showPyplotGlobalUse', False)
-
 # 4. Distribution of matches played per venue
 st.write("Matches Played at Different Venues")
 plt.figure(figsize=(10, 5))
