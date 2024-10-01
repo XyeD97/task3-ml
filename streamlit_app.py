@@ -1,45 +1,40 @@
+import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import streamlit as st
 
-# Load the dataset
-df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
+# Load data (assuming df is your DataFrame)
+# df = pd.read_csv('your_dataset.csv')
 
-# Show the dataset in Streamlit
-st.write("Dataset Overview", df.head())
+# Sidebar and Selectbox for choosing plot type
+st.sidebar.title("Plot Options")
 
-# 1. Data Overview
-st.write("Summary Statistics")
-st.write(df.describe())  # Statistical summary of numerical columns
+# Create a selectbox to choose the data to visualize
+plot_option = st.sidebar.selectbox(
+    'Select the metric to visualize:',
+    ('Matches Played', 'Wins by Team')
+)
 
-# 2. Check for missing values
-st.write("Missing Values")
-st.write(df.isnull().sum())  # Check which columns have missing values
+# Set the style and color palette
+sns.set_style("whitegrid")  # Change this to 'darkgrid', 'white', 'dark', or 'ticks' if you prefer
+sns.set_palette("Blues_r")  # Choose a Seaborn color palette for the bars
 
-# 3. Plotting some key visualizations
+# Create a larger figure for better readability
+plt.figure(figsize=(15, 10))
 
-# 4. Distribution of matches played per venue
-st.write("Matches Played at Different Venues")
-plt.figure(figsize=(40, 35))
-sns.countplot(y=df['venue'], order=df['venue'].value_counts().index)
-plt.title('Matches Played by Venue')
+# Dynamically plot the selected option
+if plot_option == 'Matches Played':
+    sns.barplot(data=df, x='Matches Played', y='Venue', orient='h')
+    plt.title('Matches Played at Different Venues', fontsize=16)
+    plt.xlabel('Matches', fontsize=12)
+    plt.ylabel('Venues', fontsize=12)
+elif plot_option == 'Wins by Team':
+    sns.barplot(data=df, x='Wins', y='Team', orient='h')
+    plt.title('Wins by Different Teams', fontsize=16)
+    plt.xlabel('Wins', fontsize=12)
+    plt.ylabel('Teams', fontsize=12)
 
-st.pyplot()
+# Rotate x-axis labels and adjust the alignment
+plt.xticks(rotation=45, ha='right')
 
-# 5. Number of wins by team
-st.write("Wins by Team")
-plt.figure(figsize=(10, 5))
-
-sns.countplot(x=df['winner'], order=df['winner'].value_counts().index)
-plt.title('Number of Wins by Team')
-plt.xticks(rotation= 90)
-st.pyplot()
-
-# 6. Wins by toss decision (field or bat)
-
-st.write("Wins Based on Toss Decision")
-plt.figure(figsize=(30, 20))
-sns.countplot(x=df['toss_decision'], hue=df['winner'])
-plt.title('Wins Based on Toss Decision')
-st.pyplot()
+# Dis
