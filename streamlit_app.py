@@ -9,3 +9,11 @@ with st.expander('Data'):
   st.write('**Raw Data**')
   df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
   df
+
+  st.write('**X**')
+  x = df.drop('id', axis=1)
+  x
+
+  st.write('**Y**')
+  y = df.id
+  y
