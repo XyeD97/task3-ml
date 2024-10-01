@@ -1,51 +1,49 @@
-import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import streamlit as st
 
 # Load the dataset
-df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv') 
+df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
 
-# Sidebar for plot options
-st.sidebar.title("Plot Options")
-
-# Selectbox for choosing the data to visualize
-plot_option = st.sidebar.selectbox(
-    'Select the metric to visualize:',
-    ('Matches Played', 'Wins by Team')
+# Sidebar for selecting visualizations
+st.sidebar.title("Visualization Selector")
+plot_type = st.sidebar.selectbox(
+    "Choose a plot to display",
+    ("Dataset Overview", "Summary Statistics", "Missing Values", 
+     "Matches Played at Different Venues", "Wins by Team", 
+     "Wins Based on Toss Decision")
 )
 
-# Set Seaborn style and color palette
-sns.set_style("whitegrid")  # Choose 'whitegrid' for the background
-sns.set_palette("Blues_r")  # Blue color palette, you can change it to any other
+# Title for the Streamlit app
+st.title("ODI Match Information Visualization")
 
-# Create a larger figure for better readability
-plt.figure(figsize=(15, 10))
+# Show the selected visualization
+if plot_type == "Dataset Overview":
+    st.write("### Dataset Overview")
+    st.write(df.head())
 
-# Dynamically plot based on user selection from the sidebar
-if plot_option == 'Matches Played':
-    # Ensure the column names are correct
-    if 'Matches Played' in df.columns and 'Venue' in df.columns:
-        sns.barplot(data=df, x='Matches Played', y='Venue', orient='h')
-        plt.title('Matches Played at Different Venues', fontsize=16)
-        plt.xlabel('Matches', fontsize=12)
-        plt.ylabel('Venues', fontsize=12)
-    else:
-        st.error("Columns 'Matches Played' or 'Venue' not found in dataset.")
-elif plot_option == 'Wins by Team':
-    if 'Wins' in df.columns and 'Team' in df.columns:
-        sns.barplot(data=df, x='Wins', y='Team', orient='h')
-        plt.title('Wins by Different Teams', fontsize=16)
-        plt.xlabel('Wins', fontsize=12)
-        plt.ylabel('Teams', fontsize=12)
-    else:
-        st.error("Columns 'Wins' or 'Team' not found in dataset.")
+elif plot_type == "Summary Statistics":
+    st.write("### Summary Statistics")
+    st.write(df.describe())
 
-# Rotate x-axis labels and adjust alignment
-plt.xticks(rotation=45, ha='right')
+elif plot_type == "Missing Values":
+    st.write("### Missing Values")
+    st.write(df.isnull().sum())
 
-# Display the plot using Streamlit
-st.pyplot(plt)
+elif plot_type == "Matches Played at Different Venues":
+    st.write("### Matches Played at Different Venues")
+    plt.figure(figsize=(20, 15))  # Adjusted size for better display
+    sns.countplot(y=df['venue'], order=df['venue'].value_counts().index, palette="coolwarm")
+    plt.title('Matches Played by Venue', fontsize=16)
+    plt.xlabel('Matches Played', fontsize=12)
+    plt.ylabel('Venue', fontsize=12)
+    st.pyplot()
 
-# Optional: Add a custom sidebar for further input or customization options if needed
-st.sidebar.markdown("### Customize your plot")
+elif plot_type == "Wins by Team":
+    st.write("### Wins by Team")
+    plt.figure(figsize=(15, 8))  # Adjusted size for better display
+    sns.countplot(x=df['winner'], order=df['winner'].value_counts().index, palette="Blues_d")
+    plt.title('Number of Wins by Team', fontsize=16)
+    plt.xticks(rotation=90, fontsize=10)
+    plt.xlabel('Team
