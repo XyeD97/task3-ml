@@ -3,6 +3,32 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
+
+import streamlit as st
+import pandas as pd
+
+# Title
+st.title("Simple Streamlit Dashboard")
+
+# Sample DataFrame
+data = {
+    'Category': ['A', 'B', 'C'],
+    'Values': [10, 20, 30]
+}
+
+df = pd.DataFrame(data)
+
+# Display DataFrame
+st.write("Sample Data:")
+st.dataframe(df)
+
+# Bar chart
+st.bar_chart(df.set_index('Category'))
+
+# Input for user interaction
+name = st.text_input("Enter your name", "Type here...")
+st.write(f"Hello, {name}!")
+
 # Load the dataset
 df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
 
