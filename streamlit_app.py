@@ -45,7 +45,7 @@ data = pd.read_csv('ODI_Match_info.csv')
 
 
 ## Creating Side Bar 
-st.sidebar.image('download.jpg')
+#st.sidebar.image('download.jpg')
 st.sidebar.header("Get Desire Filters")
 ## Team 1 Analysis 
 team1_unique = data['team1'].unique()
