@@ -3,32 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
-
-import streamlit as st
-import pandas as pd
-
-# Title
-st.title("Simple Streamlit Dashboard")
-
-# Sample DataFrame
-data = {
-    'Category': ['A', 'B', 'C'],
-    'Values': [10, 20, 30]
-}
-
-df = pd.DataFrame(data)
-
-# Display DataFrame
-st.write("Sample Data:")
-st.dataframe(df)
-
-# Bar chart
-st.bar_chart(df.set_index('Category'))
-
-# Input for user interaction
-name = st.text_input("Enter your name", "Type here...")
-st.write(f"Hello, {name}!")
-
 # Load the dataset
 df = pd.read_csv('https://raw.githubusercontent.com/XyeD97/task3-ml/refs/heads/master/ODI_Match_info.csv')
 
@@ -57,15 +31,18 @@ if plot_selection == "Missing Values":
 # 4. Distribution of matches played per venue
 if plot_selection == "Matches Played at Different Venues":
     st.write("### Matches Played at Different Venues")
-
-    # Limiting the plot to the top 20 venues with the most matches
-    top_venues = df['venue'].value_counts().nlargest(20)
+    
+    # Add a slider to allow users to select the number of top venues to display
+    top_n_venues = st.sidebar.slider("Select number of top venues to display", 5, 50, 20)
+    
+    # Limiting the plot to the top N venues with the most matches
+    top_venues = df['venue'].value_counts().nlargest(top_n_venues)
 
     plt.figure(figsize=(15, 10))  # Adjust size for better readability
     sns.barplot(y=top_venues.index, x=top_venues.values, palette="coolwarm")
 
     # Updating the title, labels, and adjusting font sizes
-    plt.title('Top 20 Venues by Matches Played', fontsize=18)
+    plt.title(f'Top {top_n_venues} Venues by Matches Played', fontsize=18)
     plt.xlabel('Number of Matches Played', fontsize=14)
     plt.ylabel('Venue', fontsize=14)
 
@@ -82,19 +59,34 @@ if plot_selection == "Matches Played at Different Venues":
 # 5. Number of wins by team
 if plot_selection == "Wins by Team":
     st.write("### Wins by Team")
+
+    # Allow the user to filter the top N teams by number of wins
+    top_n_teams = st.sidebar.slider("Select number of top teams to display", 5, 20, 10)
+
+    # Filter and plot the top N teams by number of wins
+    top_winning_teams = df['winner'].value_counts().nlargest(top_n_teams).index
+    filtered_df = df[df['winner'].isin(top_winning_teams)]
+
     plt.figure(figsize=(10, 5))
-    sns.countplot(x=df['winner'], order=df['winner'].value_counts().index)
-    plt.title('Number of Wins by Team')
+    sns.countplot(x=filtered_df['winner'], order=filtered_df['winner'].value_counts().index)
+    plt.title(f'Number of Wins by Top {top_n_teams} Teams')
     plt.xticks(rotation=90)
     st.pyplot()
 
 # 6. Wins by toss decision (field or bat)
 if plot_selection == "Wins by Toss Decision":
     st.write("### Wins Based on Toss Decision")
+
+    # Provide an option for the user to filter by toss decision
+    toss_decision_filter = st.sidebar.multiselect(
+        "Filter by Toss Decision", df['toss_decision'].unique(), default=df['toss_decision'].unique()
+    )
+    
+    filtered_df = df[df['toss_decision'].isin(toss_decision_filter)]
+
     plt.figure(figsize=(30, 20))
-    sns.countplot(x=df['toss_decision'], hue=df['winner'])
+    sns.countplot(x=filtered_df['toss_decision'], hue=filtered_df['winner'])
     plt.title('Wins Based on Toss Decision')
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
     st.pyplot()
-    
